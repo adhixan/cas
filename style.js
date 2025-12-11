@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("userInput");
   const sendBtn = document.getElementById("sendBtn");
   const quickActions = document.getElementById("quickActions");
+  // The quickButtonsDiv element is now correctly referenced for the new tile UI
   const quickButtonsDiv = quickActions.querySelector('.quick-buttons'); 
 
   // HIDE QUICK ACTIONS ON LOAD
@@ -115,6 +116,8 @@ The admission process is split into two parts:
 
 1.  **University Quota (50%):** Apply through the University of Calicut CAP portal.
 2.  **IHRD / Management Quota (50%):** Apply directly through the IHRD admission portal (ihrdadmissions.org).
+
+**Important:** Those seeking admission in the IHRD quota should also apply online to the college through **www.ihrdadmissions.org** apart from applying through University single window system.
 
 Be sure to check both portals for deadlines!
     `,
@@ -336,16 +339,6 @@ Could you please rephrase your question or select one of the quick actions below
       e.preventDefault();
       sendMessage();
     }
-  });
-
-  // Re-wire the quick action buttons to call sendMessage with their content
-  // Note: The buttons are static in HTML, but dynamically re-set by initializeQuickActions
-  document.querySelectorAll(".quick-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      input.value = btn.innerText;
-      quickActions.style.display = "none";
-      sendMessage();
-    });
   });
 
   // initial greeting and quick actions display
