@@ -3,13 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const messagesDiv = document.getElementById("messages");
   const input = document.getElementById("userInput");
   const sendBtn = document.getElementById("sendBtn");
-  const quickActions = document.getElementById("quickActions");
-  const quickButtonsDiv = quickActions.querySelector('.quick-buttons'); 
-  const quickTitle = quickActions.querySelector('.quick-title'); // Reference to the title for click event
 
-
-  // HIDE QUICK ACTIONS ON LOAD
-  quickActions.style.display = 'none';
 
   // --- 1. Bot Data and Special Actions (UPDATED) ---
 
@@ -292,58 +286,13 @@ We provide excellent facilities to support your learning:
   };
 
 
-  // --- 2. Quick Action Button Definitions (UPDATED) ---
-  const allQuickActions = [
-      'Show all courses',
-      'Admission procedure',
-      'Contact details',
-      'Facilities available',
-      'What is the fee structure?',
-      'B.Sc Computer Science details',
-      'BCA details',
-      'B.Sc Electronics details',
-      'B.Com Honours details',
-      'BBA Logistics Honours details',
-      'M.Sc Computer Science details',
-      'M.Com Finance details',
-      'Clubs and activities',
-      'What is the mission and vision?'
-  ];
+  // --- 2. Quick Action Button Definitions (REMOVED) ---
+  // Removed all quick action definitions.
 
 
-  // --- 3. Helper Functions for UI and Logic ---
+  // --- 3. Helper Functions for UI and Logic (CLEANED) ---
 
-  function createQuickActions(buttons) {
-      quickButtonsDiv.innerHTML = ''; // Clear old buttons
-      
-      buttons.forEach(btnText => {
-          const button = document.createElement('button');
-          button.className = 'quick-btn';
-          button.textContent = btnText;
-          button.addEventListener('click', () => {
-              // Hide quick actions for a clean transition
-              quickActions.style.display = 'none'; 
-              // Set input value and trigger sendMessage
-              input.value = button.textContent;
-              sendMessage();
-          });
-          quickButtonsDiv.appendChild(button);
-      });
-
-      quickActions.style.display = 'block'; // Ensure the container is visible
-  }
-
-  function initializeQuickActions() {
-      // Set the full list of actions
-      createQuickActions(allQuickActions);
-      // Ensure the dropdown is collapsed initially
-      quickActions.classList.remove('expanded');
-      // Set the title text
-      quickTitle.querySelector('span').textContent = 'Quick Questions: Click to expand menu';
-      // Re-create lucide icons if they were dynamically changed
-      lucide.createIcons();
-  }
-
+  // Removed createQuickActions and initializeQuickActions functions.
 
   function addUserMessage(text) {
     const div = document.createElement("div");
@@ -394,7 +343,7 @@ We provide excellent facilities to support your learning:
   }
 
 
-  // --- 4. Reply Logic (UPDATED MATCHING) ---
+  // --- 4. Reply Logic (UNCHANGED) ---
 
   function getBotReply(message) {
     const msg = message.toLowerCase();
@@ -474,19 +423,17 @@ I'm sorry, I couldn't quite understand that. 😟 
 
 I specialize in answering questions about CAS Vattamkulam's **courses, fees, admission process, and facilities.**
 
-Could you please rephrase your question or select an option from the menu?
+Could you please rephrase your question?
     `;
   }
 
-  // --- 5. Main Send Function ---
+  // --- 5. Main Send Function (CLEANED) ---
 
   function sendMessage() {
     const text = input.value.trim();
     if (!text) return;
 
-    // Always collapse and hide quick actions before sending
-    quickActions.classList.remove('expanded');
-    quickActions.style.display = "none";
+    // Removed quick action hiding logic
     
     addUserMessage(text);
     input.value = "";
@@ -498,14 +445,13 @@ Could you please rephrase your question or select an option from the menu?
       const botResponse = getBotReply(text);
       addBotMessage(botResponse);
 
-      // Re-initialize and show quick actions after every reply
-      initializeQuickActions();
+      // Removed quick action re-initialization
       
     }, 600);
   }
 
 
-  // --- 6. Event Listeners and Initialization ---
+  // --- 6. Event Listeners and Initialization (CLEANED) ---
 
   sendBtn.addEventListener("click", sendMessage);
 
@@ -516,15 +462,9 @@ Could you please rephrase your question or select an option from the menu?
     }
   });
 
-  // NEW: Dropdown Toggle Listener on the title
-  quickTitle.addEventListener("click", () => {
-    quickActions.classList.toggle('expanded'); // Toggle class for CSS control
-    // Re-create icons to apply the rotation/change
-    lucide.createIcons();
-  });
+  // Removed dropdown toggle listener
 
-
-  // initial greeting and quick actions display
+  // initial greeting and chat start
   addBotMessage("Hello! 👋 I am the CAS Vattamkulam AI Assistant. I can help you with College Overview, Courses, Fees, Admission, and Facilities. What would you like to know?");
-  initializeQuickActions();
+  // Removed initializeQuickActions() call.
 });
