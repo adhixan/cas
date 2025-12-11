@@ -2,11 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" /> 
   <title>CAS Vattamkulam Chatbot</title>
   <link rel="stylesheet" href="style.css" />
 
   <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- FIX ANDROID 100% HEIGHT -->
+  <script>
+    function fixHeight() {
+      document.documentElement.style.setProperty('--app-height', window.innerHeight + 'px');
+    }
+    window.addEventListener("resize", fixHeight);
+    window.addEventListener("orientationchange", fixHeight);
+    fixHeight();
+  </script>
+
 </head>
 
 <body>
@@ -34,12 +45,15 @@
 
     <div id="quickActions" class="quick-actions">
       <div class="quick-title">
-        <i data-lucide="chevron-down" class="spark"></i>
-        <span>Quick Questions: Click to expand menu</span>
+        <i data-lucide="sparkles" class="spark"></i>
+        <span>Quick questions:</span>
       </div>
-      
       <div class="quick-buttons">
-        </div>
+        <button class="quick-btn">Show all courses</button>
+        <button class="quick-btn">Admission procedure</button>
+        <button class="quick-btn">Contact details</button>
+        <button class="quick-btn">Facilities available</button>
+      </div>
     </div>
 
     <div class="input-box">
