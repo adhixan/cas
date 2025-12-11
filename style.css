@@ -165,7 +165,7 @@ body {
   50% { transform: translateY(-5px); }
 }
 
-/* --- QUICK ACTIONS (DROPDOWN) STYLES --- */
+/* --- QUICK ACTIONS (BUTTON TILES) STYLES --- */
 .quick-actions {
   background: white;
   padding: 12px 20px; 
@@ -178,49 +178,32 @@ body {
   align-items: center;
   color: #555;
   font-size: 14px;
-  margin-bottom: 10px; /* Space above the dropdown */
+  margin-bottom: 10px; /* Space above the buttons */
 }
 
-.quick-select-wrapper {
-  position: relative;
-  display: block; 
-  width: 100%; 
-  max-width: 300px; /* Limit width for cleaner look */
+/* ADDED: Container for the new quick-action buttons */
+.quick-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap to the next line */
+  gap: 8px; /* Spacing between buttons */
 }
 
-.quick-select {
-  width: 100%; 
-  padding: 10px 14px;
-  border: 1px solid #c9d0f0; 
-  background-color: #f7f9ff; 
-  border-radius: 8px;
+/* ADDED: Style for the individual quick action button tiles */
+.quick-btn {
+  padding: 8px 16px;
+  background-color: #f0f4ff; /* Light blue background */
+  color: #2563eb; /* Blue text color */
+  border: 1px solid #c9d0f0;
+  border-radius: 20px; /* Pill shape */
   font-size: 14px;
-  color: #2563eb;
   cursor: pointer;
-  
-  /* Hide default arrow and style the appearance */
-  appearance: none; 
-  -webkit-appearance: none; 
-  -moz-appearance: none; 
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  flex-shrink: 0; /* Prevents buttons from shrinking */
 }
 
-.quick-select:focus {
-  border-color: #4f46e5; 
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-  outline: none;
-}
-
-/* Custom arrow for the dropdown */
-.quick-select-wrapper::after {
-  content: '▼';
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
-  color: #2563eb;
-  pointer-events: none; /* Allows click-through to the select element */
-  font-size: 10px;
+.quick-btn:hover {
+  background-color: #e0e7ff; /* Slightly darker blue on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 /* --- END OF QUICK ACTIONS STYLES --- */
 
