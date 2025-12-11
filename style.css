@@ -8,7 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   /* Default for mobile: full height and width */
-  height: 150vh; 
+  height: 90vh; 
   width: 100%;
 }
 
@@ -230,3 +230,4 @@ body {
   opacity: 0.85;
 
 }
+
