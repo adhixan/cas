@@ -9,14 +9,13 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
-    // Set --app-height custom property on the root element (html)
+    // Using the CSS variable convention for better mobile height fixes
     function fixHeight() {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
     window.addEventListener("resize", fixHeight);
     window.addEventListener("orientationchange", fixHeight);
-    // Initial call
     fixHeight();
   </script>
 
@@ -59,7 +58,6 @@
           <option value="Admission procedure">Admission procedure</option>
           <option value="Contact details">Contact details</option>
           <option value="Facilities available">Facilities available</option>
-          <option value="Fee structure">Fee structure for B.Sc. Computer Science</option>
         </select>
       </div>
     </div>
@@ -76,6 +74,6 @@
     // This script replaces the data-lucide attributes with the actual SVG icons
     lucide.createIcons(); 
   </script>
-  <script src="script.js"></script> 
+  <script src="style.js"></script>
 </body>
 </html>
