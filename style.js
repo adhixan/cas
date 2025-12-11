@@ -480,8 +480,7 @@ Could you please rephrase your question or select one of the quick actions below
       const botResponse = getBotReply(text);
       addBotMessage(botResponse);
 
-      // Always show quick actions after a reply
-      initializeQuickActions();
+      // initializeQuickActions(); // This line was removed as per your request
       
     }, 600);
   }
@@ -502,3 +501,4 @@ Could you please rephrase your question or select one of the quick actions below
   addBotMessage("Hello! 👋 I am the CAS Vattamkulam AI Assistant. I can help you with College Overview, Courses, Fees, Admission, and Facilities. What would you like to know?");
   initializeQuickActions(); // Show buttons only after the initial welcome
 });
+    
