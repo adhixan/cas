@@ -1,73 +1,75 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const messagesDiv = document.getElementById("messages");
-  const input = document.getElementById("userInput");
-  const sendBtn = document.getElementById("sendBtn");
+  const messagesDiv = document.getElementById("messages");
+  const input = document.getElementById("userInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const quickActions = document.getElementById("quickActions");
+  const quickButtonsDiv = quickActions.querySelector('.quick-buttons'); 
 
+  // HIDE QUICK ACTIONS ON LOAD
+  quickActions.style.display = 'none';
 
-  // --- 1. Bot Data and Special Actions (UPDATED) ---
+  // --- 1. Bot Data and Special Actions ---
 
-  const casData = {
-    collegeInfo: `
+  const casData = {
+    collegeInfo: `
 **College of Applied Science (CAS) Vattamkulam - Basic Details**
 
 We are a leading institute managed by **IHRD**, a Government of Kerala undertaking. We are affiliated with the **University of Calicut**.
 
-•  **Full Form:** College of Applied Science
-•  **Year Established:** 2005
-•  **Location:** Nellissery, near Edappal, Malappuram District, Kerala.
-    `,
+•  **Full Form:** College of Applied Science
+•  **Year Established:** 2005
+•  **Location:** Nellissery, near Edappal, Malappuram District, Kerala.
+    `,
 
-    fullForm: `
+    fullForm: `
 CAS stands for the **College of Applied Science**. We are part of the network of IHRD (Institute of Human Resources Development) institutions across Kerala.
-    `,
+    `,
 
-    contact: `
+    contact: `
 📍 **Contact Information:**
 You can reach the College of Applied Science, Vattamkulam, at:
 
 ☎️ **Phone:** 0494-2689655 or 8547006802
 📧 **Email:** casvattamkulam@ihrd.ac.in
 🌐 **Website:** casvattamkulam.ihrd.ac.in
-    `,
+    `,
 
-    principal: `
+    principal: `
 👨‍🏫 Our Principal is **Sri. Abdussammed P.** He is dedicated to maintaining high standards of education and discipline.
-    `,
+    `,
 
-    departments: `
+    departments: `
 We have dynamic departments covering various streams:
 
-• **Computer Science:** (B.Sc CS Hons, BCA, M.Sc CS)
+• **Computer Science:** (B.Sc CS, BCA, M.Sc CS)
 • **Electronics:** (B.Sc Electronics)
-• **Commerce:** (B.Com Hons, M.Com Finance, BBA Logistics Hons)
+• **Commerce:** (B.Com Honours, M.Com Finance)
 • **General Department:** (Mathematics, English, etc.)
-    `,
+    `,
 
-    // UPDATED UG COURSES DATA
-    ugCourses: `
+    ugCourses: `
 We offer the following **Undergraduate (UG)** programs:
 
-• **B.Sc Computer Science Honours** (4 years, 36 Seats)
-• **BCA** (4 years, 24 Seats)
-• **B.Sc Electronics** (3 years, 36 Seats)
-• **B.Com with Computer Application (Honours)** (4 years, 48 Seats)
-• **BBA Logistics Honours** (4 years, 30 Seats)
+• **B.Sc Computer Science** (3 years)
+• **BCA** (3 years)
+• **B.Sc Electronics** (3 years)
+• **B.Com with Computer Application (Honours)** (4 years)
 
-Need details on eligibility, fees, or intake for any of these?
-    `,
+Need details on eligibility or intake for any of these?
+    `,
 
-    // UPDATED PG COURSES DATA
-    pgCourses: `
+    pgCourses: `
 We offer the following **Postgraduate (PG)** programs:
 
-• **M.Sc Computer Science** (2 years, 10 Seats)
-• **M.Com Finance** (2 years, 15 Seats)
+• **M.Sc Computer Science** (2 years)
+• **M.Com Finance** (2 years)
 
 These programs are excellent for career advancement!
-    `,
+    `,
 
-    activities: `
+    // DATA ADDED: Clubs and Activities
+    activities: `
 We encourage holistic development through various **Clubs and Associations**:
 
 1. **NSS Unit**
@@ -87,194 +89,38 @@ We encourage holistic development through various **Clubs and Associations**:
 15. **Tourism Club**
 16. **Institution's Innovation Council**
 17. **Media Cell**
-    `,
+    `,
 
-    mission: `
+    // DATA ADDED: Mission and Vision
+    mission: `
 To impart quality education and create professionals with high competency and values who can make indelible mark in their respective fields.
-    `,
-    vision: `
+    `,
+    vision: `
 To develop into a contributing Centre of excellence in knowledge and technology creating globally competitive professionals who would contribute positively to the society.
-    `,
+    `,
 
-    // GENERAL FEES: Summarized
-    fees: `
-The fee structure varies by course. Here are the approximate semester fees (excluding Admission, Alumni, and Caution Deposit fees):
+    fees: `
+The fee structure varies by course, but here are the approximate semester fees:
 
-- **B.Sc CS/BCA/B.Sc Electronics:** ₹17,270 per semester
+- **B.Sc/BCA:** ₹17,270 per semester
 - **B.Com Honours:** ₹13,035 per semester
-- **BBA Logistics Honours:** ₹8,470 per semester
-- **M.Sc CS:** ₹22,550 per semester
-- **M.Com Finance:** ₹18,425 per semester
+- **M.Sc CS:** ₹22,575 per semester
+- **M.Com Finance:** ₹18,575 per semester
 
-*Note: SC/ST/OEC students may be eligible for fee concessions and financial grants. All figures are per semester.*
-    `,
+*Note: SC/ST/OEC students may be eligible for fee concessions and financial grants.*
+    `,
 
-    // DETAILED COURSE DATA FUNCTION (NEW/UPDATED)
-    getCourseDetails: (courseName) => {
-        const details = {
-            'msc computer science': {
-                seats: '10 + marginal increase',
-                duration: '2 Years (4 Semesters)',
-                eligibility: 'Bachelor of Computer Science',
-                selection: 'On the basis of marks of UG course.',
-                fees: `
-**M.Sc Computer Science Fee Details (Per Semester)**
-| Fee Particulars | Amount (₹) |
-|---|---|
-| Semester Fee | 22,550 |
-| Admission Fee | 1,100 |
-| Alumni Fee | 200 |
-| Caution Deposit (Refundable) | 1,000 |
-*Note: Total payable at admission is ₹24,850. SC/ST/OEC students may be eligible for exemption.*
-                `
-            },
-            'mcom finance': {
-                seats: '15 + marginal increase',
-                duration: '2 Years (4 Semesters)',
-                eligibility: 'Bachelor of Commerce',
-                selection: 'On the basis of marks of UG course.',
-                fees: `
-**M.Com Finance Fee Details (Per Semester)**
-| Fee Particulars | Amount (₹) |
-|---|---|
-| Semester Fee | 18,425 |
-| Admission Fee | 1,100 |
-| Alumni Fee | 200 |
-| Caution Deposit (Refundable) | 1,000 |
-*Note: Total payable at admission is ₹20,725. SC/ST/OEC students may be eligible for exemption.*
-                `
-            },
-            'bsc computer science': {
-                seats: '36 + marginal increase',
-                duration: '4 Years (8 Semesters) - Honours',
-                eligibility: 'Higher Secondary or Equivalent with Maths or Electronics',
-                selection: 'On the basis of marks of optional subjects at higher secondary course.',
-                fees: `
-**B.Sc Computer Science Fee Details (Per Semester)**
-| Fee Particulars | Amount (₹) |
-|---|---|
-| Semester Fee | 17,270 |
-| Admission Fee | 330 |
-| Alumni Fee | 200 |
-| Caution Deposit (Refundable) | 1,000 |
-*Note: Total payable at admission is ₹18,800. SC/ST/OEC students may be eligible for exemption.*
-                `
-            },
-            'bca': {
-                seats: '24',
-                duration: '4 Years (8 Semesters)',
-                eligibility: 'HSE or equivalent with Mathematics/ Computer Science/Computer Application/ IT/Informatics Practice/Informatics/ Additional Mathematics.',
-                selection: 'On the basis of marks of optional subjects at higher secondary course.',
-                fees: `
-**BCA Fee Details (Per Semester)**
-| Fee Particulars | Amount (₹) |
-|---|---|
-| Semester Fee | 17,270 |
-| Admission Fee | 330 |
-| Alumni Fee | 200 |
-| Caution Deposit (Refundable) | 1,000 |
-*Note: Total payable at admission is ₹18,800. SC/ST/OEC students may be eligible for exemption.*
-                `
-            },
-            'bba logistics': {
-                seats: '30',
-                duration: '4 Years (8 Semesters) - Honours',
-                eligibility: 'HSE or equivalent with not less than 45%. 5% concession for OBC/OEC. Pass only for SC/ST.',
-                selection: 'On the basis of marks of optional subjects at higher secondary course.',
-                fees: `
-**BBA Logistics Honours Fee Details (Per Semester)**
-| Fee Particulars | Amount (₹) |
-|---|---|
-| Semester Fee | 8,470 |
-| Admission Fee | 330 |
-| Alumni Fee | 200 |
-| Caution Deposit (Refundable) | 1,000 |
-*Note: Total payable at admission is ₹10,000. SC/ST/OEC students may be eligible for exemption.*
-                `
-            },
-            'bsc electronics': {
-                seats: '36 + marginal increase',
-                duration: '3 Years (6 Semesters)',
-                eligibility: 'Higher Secondary or Equivalent with Maths or Electronics',
-                selection: 'On the basis of marks of optional subjects at higher secondary course.',
-                fees: `
-**B.Sc Electronics Fee Details (Per Semester)**
-| Fee Particulars | Amount (₹) |
-|---|---|
-| Semester Fee | 17,270 |
-| Admission Fee | 330 |
-| Alumni Fee | 200 |
-| Caution Deposit (Refundable) | 1,000 |
-*Note: Total payable at admission is ₹18,800. SC/ST/OEC students may be eligible for exemption.*
-                `
-            },
-            'bcom honours': {
-                seats: '48 + marginal increase',
-                duration: '4 Years (8 Semesters)',
-                eligibility: 'Higher Secondary or Equivalent.',
-                selection: 'On the basis of marks of optional subjects at higher secondary course.',
-                fees: `
-**B.Com Honours Fee Details (Per Semester)**
-| Fee Particulars | Amount (₹) |
-|---|---|
-| Semester Fee | 13,035 |
-| Admission Fee | 330 |
-| Alumni Fee | 200 |
-| Caution Deposit (Refundable) | 1,000 |
-*Note: Total payable at admission is ₹14,565. SC/ST/OEC students may be eligible for exemption.*
-                `
-            }
-        }[courseName];
+    admission: `
+The admission process is split into two parts:
 
-        if (!details) return null;
+1.  **University Quota (50%):** Apply through the University of Calicut CAP portal.
+2.  **IHRD / Management Quota (50%):** Apply directly through the IHRD admission portal (ihrdadmissions.org).
 
-        return `
-**Details for ${courseName.toUpperCase()}:**
+Be sure to check both portals for deadlines!
+    `,
 
-• **Duration:** ${details.duration}
-• **Seats:** ${details.seats}
-• **Eligibility:** ${details.eligibility}
-• **Mode of Selection:** ${details.selection}
-
-${details.fees}
-
-*Note: PTA Fee & University affiliation fee are not included in the fee lists.*
-        `;
-    },
-
-
-    admission: `
-### 🎓 Admission Procedure (UG & PG Courses)
-
-Admission to all courses is conducted through a dual-quota system:
-* **University Quota (50%):** Filled through the University of Calicut CAP portal.
-* **IHRD / Management Quota (50%):** Filled directly through the IHRD admission portal (**www.ihrdadmissions.org**).
-
----
-#### **1. Undergraduate (UG) Admission**
-
-* **Time of Notification:** After the publication of the Kerala Govt. +2 results.
-* **Course Intake (Total Seats mentioned in UG section):**
-    * B.Sc Computer Science Honours: **36 seats**
-    * BCA: **24 seats**
-    * B.Sc Electronics: **36 seats**
-    * B.Com Honours: **48 seats** (Note: Previous data mentioned 60, but UG list shows 48 seats for B.Com Hons)
-    * BBA Logistics Honours: **30 seats**
-* **Application Requirement:** Applicants must apply through **both** the Calicut University single-window system (CAP) and the IHRD online admission portal for IHRD/Management quota consideration.
-
----
-#### **2. Postgraduate (PG) Admission**
-
-* **Time of Notification:** After the publication of the Calicut University Degree results.
-* **Course Intake (Total Seats):**
-    * M.Sc Computer Science: **10 seats**
-    * M.Com Finance: **15 seats**
-* **Application Requirement:** Applicants must apply through **both** the Calicut University single-window procedure and the IHRD online admission portal for IHRD/Management quota consideration.
-
-Be sure to check both portals for official notifications and deadlines!
-    `,
-
-    facilities: `
+    // FACILITIES DATA (UPDATED)
+    facilities: `
 We provide excellent facilities to support your learning:
 
 • **Modern Computer Lab** (fully equipped)
@@ -282,189 +128,227 @@ We provide excellent facilities to support your learning:
 • **Comprehensive Library**
 • **Open Gym** for fitness
 • **NSS Unit** and dedicated **Placement Support** team.
-    `
-  };
+    `
+  };
 
 
-  // --- 2. Quick Action Button Definitions (REMOVED) ---
-  // Removed all quick action definitions.
+  // --- 2. Quick Action Button Definitions ---
+  const defaultActions = [
+      'Show all courses',
+      'Admission procedure',
+      'Contact details',
+      'Facilities available'
+  ];
 
 
-  // --- 3. Helper Functions for UI and Logic (CLEANED) ---
+  // --- 3. Helper Functions for UI and Logic ---
 
-  // Removed createQuickActions and initializeQuickActions functions.
+  function setQuickActions(title, buttons) {
+      const quickTitle = quickActions.querySelector('.quick-title span');
+      
+      quickTitle.textContent = title;
+      quickButtonsDiv.innerHTML = ''; // Clear old buttons
+      
+      buttons.forEach(btnText => {
+          const button = document.createElement('button');
+          button.className = 'quick-btn';
+          button.textContent = btnText;
+          button.addEventListener('click', () => {
+              // Set input value and trigger sendMessage
+              input.value = button.textContent;
+              sendMessage();
+          });
+          quickButtonsDiv.appendChild(button);
+      });
 
-  function addUserMessage(text) {
-    const div = document.createElement("div");
-    div.className = "msg msg-user";
-    div.innerHTML = `
-      <div class="bubble bubble-user">${text}</div>
-      <div class="user-icon"><i data-lucide="user"></i></div>
-    `;
-    messagesDiv.appendChild(div);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    lucide.createIcons();
-  }
+      // Show the quick actions box
+      quickActions.style.display = 'block';
+  }
 
-  function addBotMessage(text) {
-    const div = document.createElement("div");
-    div.className = "msg msg-bot";
-    div.innerHTML = `
-      <div class="bot-icon"><i data-lucide="bot"></i></div>
-      <div class="bubble bubble-bot">${text}</div>
-    `;
-    messagesDiv.appendChild(div);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    lucide.createIcons();
-  }
-
-  function showTyping() {
-    const typingDiv = document.createElement("div");
-    typingDiv.id = "typing";
-    typingDiv.className = "msg msg-bot";
-    typingDiv.innerHTML = `
-      <div class="bot-icon"><i data-lucide="bot"></i></div>
-      <div class="bubble bubble-bot">
-        <div class="typing">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    `;
-    messagesDiv.appendChild(typingDiv);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    lucide.createIcons();
-  }
-
-  function removeTyping() {
-    const t = document.getElementById("typing");
-    if (t) t.remove();
-  }
+  function initializeQuickActions() {
+      // Sets the default buttons and ensures they are wired up
+      setQuickActions('Quick questions:', defaultActions);
+  }
 
 
-  // --- 4. Reply Logic (UNCHANGED) ---
+  function addUserMessage(text) {
+    const div = document.createElement("div");
+    div.className = "msg msg-user";
+    div.innerHTML = `
+      <div class="bubble bubble-user">${text}</div>
+      <div class="user-icon"><i data-lucide="user"></i></div>
+    `;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    lucide.createIcons();
+  }
 
-  function getBotReply(message) {
-    const msg = message.toLowerCase();
+  function addBotMessage(text) {
+    const div = document.createElement("div");
+    div.className = "msg msg-bot";
+    div.innerHTML = `
+      <div class="bot-icon"><i data-lucide="bot"></i></div>
+      <div class="bubble bubble-bot">${text}</div>
+    `;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    lucide.createIcons();
+  }
 
-    // Specific Course Details
-    if (msg.includes("m.sc computer science") || msg.includes("msc cs"))
-        return casData.getCourseDetails('msc computer science');
-    if (msg.includes("m.com finance") || msg.includes("mcom finance"))
-        return casData.getCourseDetails('mcom finance');
-    if (msg.includes("b.sc computer science") || msg.includes("bsc cs"))
-        return casData.getCourseDetails('bsc computer science');
-    if (msg.includes("bca"))
-        return casData.getCourseDetails('bca');
-    if (msg.includes("bba logistics") || msg.includes("bba hons"))
-        return casData.getCourseDetails('bba logistics');
-    if (msg.includes("b.sc electronics") || msg.includes("bsc electronics"))
-        return casData.getCourseDetails('bsc electronics');
-    if (msg.includes("b.com honours") || msg.includes("bcom hons"))
-        return casData.getCourseDetails('bcom honours');
+  function showTyping() {
+    const typingDiv = document.createElement("div");
+    typingDiv.id = "typing";
+    typingDiv.className = "msg msg-bot";
+    typingDiv.innerHTML = `
+      <div class="bot-icon"><i data-lucide="bot"></i></div>
+      <div class="bubble bubble-bot">
+        <div class="typing">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    `;
+    messagesDiv.appendChild(typingDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    lucide.createIcons();
+  }
 
-
-    // General Info & Welcome
-    if (msg.includes("hello") || msg.includes("hi") || msg.includes("hai"))
-      return "Hello! 👋 I am the CAS Vattamkulam AI Assistant. How can I assist you with information about the college today?";
-    
-    if (msg.includes("full form") || msg.includes("cas full form") || msg.includes("cas means"))
-      return casData.fullForm;
-
-    if (msg.includes("about the college") || msg.includes("about cas") || msg.includes("what is cas"))
-      return casData.collegeInfo + "\n\nWhat other details are you looking for?";
-      
-    if (msg.includes("year") || msg.includes("established") || msg.includes("started") || msg.includes("when"))
-      return "The College of Applied Science, Vattamkulam was proudly established in **2005** and has been serving students for almost two decades.";
-
-    if (msg.includes("activities") || msg.includes("club") || msg.includes("association"))
-        return casData.activities;
-
-    if (msg.includes("mission") && msg.includes("vision"))
-        return "Our guiding principles are:\n\n**Mission:** " + casData.mission + "\n\n**Vision:** " + casData.vision;
-    if (msg.includes("mission"))
-        return casData.mission;
-    if (msg.includes("vision"))
-        return casData.vision;
+  function removeTyping() {
+    const t = document.getElementById("typing");
+    if (t) t.remove();
+  }
 
 
-    // Specific Topics
-    if (msg.includes("contact") || msg.includes("phone") || msg.includes("email") || msg.includes("address") || msg.includes("location") || msg.includes("where"))
-      return casData.contact;
+  // --- 4. Reply Logic (FIXED FACILITIES MATCHING) ---
 
-    if (msg.includes("principal") || msg.includes("head"))
-      return casData.principal;
+  function getBotReply(message) {
+    const msg = message.toLowerCase();
 
-    if (msg.includes("ug") || msg.includes("undergraduate"))
-      return casData.ugCourses;
+    // 1. Core Info & Welcome
+    if (msg.includes("hello") || msg.includes("hi") || msg.includes("hai"))
+      return "Hello! 👋 I am the CAS Vattamkulam AI Assistant. How can I assist you with information about the college today?";
+    
+    // CAS Full Form
+    if (msg.includes("full form") || msg.includes("cas full form") || msg.includes("cas means"))
+      return casData.fullForm;
 
-    if (msg.includes("pg") || msg.includes("postgraduate"))
-      return casData.pgCourses;
+    // General College Info
+    if (msg.includes("about the college") || msg.includes("about cas") || msg.includes("what is cas"))
+      return casData.collegeInfo + "\n\nWhat other details are you looking for?";
+      
+    // Year Established
+    if (msg.includes("year") || msg.includes("established") || msg.includes("started") || msg.includes("when"))
+      return "The College of Applied Science, Vattamkulam was proudly established in **2005** and has been serving students for almost two decades.";
 
-    if (msg.includes("course") || msg.includes("program") || msg.includes("degree") || msg.includes("all courses"))
-      return casData.ugCourses + "\n\n" + casData.pgCourses;
+    // ADDED: Clubs and Activities
+    if (msg.includes("activities") || msg.includes("club") || msg.includes("association"))
+        return casData.activities;
 
-    if (msg.includes("fees") || msg.includes("fee") || msg.includes("cost") || msg.includes("fee structure"))
-      return casData.fees;
+    // ADDED: Mission and Vision
+    if (msg.includes("mission") && msg.includes("vision"))
+        return "Our guiding principles are:\n\n**Mission:** " + casData.mission + "\n\n**Vision:** " + casData.vision;
+    if (msg.includes("mission"))
+        return casData.mission;
+    if (msg.includes("vision"))
+        return casData.vision;
 
-    if (msg.includes("admission") || msg.includes("apply") || msg.includes("quota") || msg.includes("procedure"))
-      return casData.admission;
+    // 2. Specific Topics
+    if (msg.includes("contact") || msg.includes("phone") || msg.includes("email") || msg.includes("address") || msg.includes("location") || msg.includes("where"))
+      return casData.contact;
 
-    if (msg.includes("department") || msg.includes("departments"))
-      return casData.departments;
+    if (msg.includes("principal") || msg.includes("head"))
+      return casData.principal;
 
-    if (/(facility|facilities|infrastructure|lab|library|gym)/.test(msg))
-      return casData.facilities;
+    if (msg.includes("ug") || msg.includes("undergraduate"))
+      return casData.ugCourses;
 
-    // Default/Fallback
-    return `
-I'm sorry, I couldn't quite understand that. 😟 
+    if (msg.includes("pg") || msg.includes("postgraduate"))
+      return casData.pgCourses;
+
+    if (msg.includes("course") || msg.includes("program") || msg.includes("degree") || msg.includes("all courses"))
+      return casData.ugCourses + "\n\n" + casData.pgCourses;
+
+    if (msg.includes("fees") || msg.includes("fee") || msg.includes("cost") || msg.includes("fee structure"))
+      return casData.fees;
+
+    if (msg.includes("admission") || msg.includes("apply") || msg.includes("quota") || msg.includes("procedure"))
+      return casData.admission;
+
+    if (msg.includes("department") || msg.includes("departments"))
+      return casData.departments;
+
+    // FIX: Using a regex for facilities to match multiple variations
+    if (/(facility|facilities|infrastructure|lab|library|gym)/.test(msg))
+      return casData.facilities;
+
+    // 3. Default/Fallback
+    return `
+I'm sorry, I couldn't quite understand that. 😟 
 
 I specialize in answering questions about CAS Vattamkulam's **courses, fees, admission process, and facilities.**
 
-Could you please rephrase your question?
-    `;
-  }
+Could you please rephrase your question or select one of the quick actions below?
+    `;
+  }
 
-  // --- 5. Main Send Function (CLEANED) ---
+  // --- 5. Main Send Function (UPDATED QUICK ACTION DISPLAY LOGIC) ---
 
-  function sendMessage() {
-    const text = input.value.trim();
-    if (!text) return;
+  function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
 
-    // Removed quick action hiding logic
-    
-    addUserMessage(text);
-    input.value = "";
+    // Hide quick actions when the user sends a message
+    quickActions.style.display = "none";
+    
+    addUserMessage(text);
+    input.value = "";
 
-    showTyping();
+    showTyping();
 
-    setTimeout(() => {
-      removeTyping();
-      const botResponse = getBotReply(text);
-      addBotMessage(botResponse);
+    setTimeout(() => {
+      removeTyping();
+      const botResponse = getBotReply(text);
+      addBotMessage(botResponse);
 
-      // Removed quick action re-initialization
-      
-    }, 600);
-  }
+      // Check if the response is the default fallback message
+      const isFallback = botResponse.includes("Couldn't quite understand that");
+      
+      // If it's the welcome message or any non-fallback/non-navigational response, show quick actions.
+      // This ensures quick actions always return after a successful answer.
+      if (!isFallback) {
+          initializeQuickActions();
+      } else {
+          // If it IS fallback, initialize the actions to prompt the user
+          initializeQuickActions();
+      }
+      
+    }, 600);
+  }
 
 
-  // --- 6. Event Listeners and Initialization (CLEANED) ---
+  // --- 6. Event Listeners and Initialization ---
 
-  sendBtn.addEventListener("click", sendMessage);
+  sendBtn.addEventListener("click", sendMessage);
 
-  input.addEventListener("keypress", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
 
-  // Removed dropdown toggle listener
+  // Re-wire the quick action buttons to call sendMessage with their content
+  // Note: The buttons are static in HTML, but dynamically re-set by initializeQuickActions
+  document.querySelectorAll(".quick-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      input.value = btn.innerText;
+      quickActions.style.display = "none";
+      sendMessage();
+    });
+  });
 
-  // initial greeting and chat start
-  addBotMessage("Hello! 👋 I am the CAS Vattamkulam AI Assistant. I can help you with College Overview, Courses, Fees, Admission, and Facilities. What would you like to know?");
-  // Removed initializeQuickActions() call.
+  // initial greeting and quick actions display
+  addBotMessage("Hello! 👋 I am the CAS Vattamkulam AI Assistant. I can help you with College Overview, Courses, Fees, Admission, and Facilities. What would you like to know?");
+  initializeQuickActions(); // Show buttons only after the initial welcome
 });
