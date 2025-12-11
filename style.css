@@ -1,3 +1,7 @@
+:root {
+  --vh: 1vh; /* Default fallback for modern units */
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -7,13 +11,12 @@ body {
 .chat-container {
   display: flex;
   flex-direction: column;
-  /* Default for mobile: full height and width */
-  height: 100vh; 
+  /* Use the custom property for mobile height */
+  height: calc(var(--vh, 1vh) * 100); 
   width: 100%;
 }
 
-/* 📱 Mobile Responsiveness (Phone Screen Ratio) 📱 */
-/* Apply this style only to screens wider than 600px (i.e., tablet and desktop) */
+/* 📱 Mobile Responsiveness (Tablet/Desktop) 📱 */
 @media (min-width: 600px) {
   .chat-container {
     max-width: 500px; /* Standard mobile-like width */
@@ -46,10 +49,10 @@ body {
 }
 
 .college-logo {
-  height: 48px;       /* adjust if your logo is larger/smaller */
+  height: 48px;
   width: auto;
   margin-right: 12px;
-  border-radius: 4px; /* optional */
+  border-radius: 4px;
   object-fit: contain;
 }
 
@@ -72,7 +75,7 @@ body {
 
 .assistant-tag {
   padding: 6px 12px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   backdrop-filter: blur(3px);
 }
@@ -82,6 +85,7 @@ body {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
+  background-color: #fcfdff; /* Add a light background to the message area */
 }
 
 .msg {
@@ -161,10 +165,10 @@ body {
   50% { transform: translateY(-5px); }
 }
 
-/* Quick Actions */
+/* --- UPDATED QUICK ACTIONS (DROPDOWN) STYLES --- */
 .quick-actions {
   background: white;
-  padding: 12px 20px 44px 20px; /* Corrected: Ensures space above input box */
+  padding: 12px 20px; /* Reduced bottom padding */
   border-top: 1px solid #ddd;
 }
 
@@ -174,29 +178,54 @@ body {
   align-items: center;
   color: #555;
   font-size: 14px;
+  margin-bottom: 10px; /* Space above the dropdown */
 }
 
-.quick-buttons {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.quick-select-wrapper {
+  position: relative;
+  display: block; /* Make it take full width */
+  width: 100%; 
+  max-width: 300px; /* Optional: Limit width on wider screens */
 }
 
-.quick-btn {
-  padding: 8px 14px;
-  border: 1px solid #d0d7ff;
-  background: white;
+.quick-select {
+  width: 100%; 
+  padding: 10px 14px;
+  border: 1px solid #c9d0f0; /* Light blue/primary color border */
+  background-color: #f7f9ff; /* Very light background */
   border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   color: #2563eb;
-  transition: background 0.2s;
+  cursor: pointer;
+  
+  /* Hide default arrow and style the appearance */
+  appearance: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.quick-btn:hover {
-  background: #eef2ff;
+.quick-select:focus {
+  border-color: #4f46e5; 
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  outline: none;
 }
+
+/* Custom arrow for the dropdown */
+.quick-select-wrapper::after {
+  content: 'chevron-down'; /* Unicode down arrow (or use a Lucide icon via content, if possible, but text is simpler for CSS pseudo-elements) */
+  font-family: 'lucide'; /* You may need to load lucide as a font for this to work, but let's use a simple arrow for compatibility */
+  content: '▼';
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  color: #2563eb;
+  pointer-events: none; 
+  font-size: 10px;
+}
+/* --- END OF UPDATED QUICK ACTIONS STYLES --- */
+
 
 /* Input */
 .input-box {
@@ -212,6 +241,7 @@ body {
   padding: 12px;
   border-radius: 12px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 #sendBtn {
