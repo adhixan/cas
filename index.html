@@ -28,28 +28,33 @@
     <div class="header">
       <div class="header-content">
         <div class="brand">
-          <img src="logo.png" class="college-logo" />
+          <img src="logo.png" class="college-logo" alt="CAS Logo"/>
           <div>
             <div class="college-title">CAS Vattamkulam</div>
             <div class="college-sub">AI Assistant</div>
           </div>
         </div>
+
+        <div class="header-actions">
+          <!-- minor controls -->
+          <button id="clearBtn" title="Clear conversation">Clear</button>
+        </div>
       </div>
     </div>
 
     <!-- Messages -->
-    <div id="messages" class="messages"></div>
+    <div id="messages" class="messages" aria-live="polite"></div>
 
     <!-- Input -->
     <div class="input-box">
-      <input type="text" id="userInput" placeholder="Type your message..." />
-      <button id="sendBtn"><i data-lucide="send"></i></button>
+      <input type="text" id="userInput" placeholder="Ask anything about CAS Vattamkulam — courses, fees, admission..." autocomplete="off" />
+      <button id="sendBtn" aria-label="Send message"><i data-lucide="send"></i></button>
     </div>
 
   </div>
 
   <script>
-    lucide.createIcons(); 
+    lucide.createIcons();
   </script>
   <script src="style.js"></script>
 </body>
